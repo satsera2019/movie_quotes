@@ -1,6 +1,6 @@
 @extends('admin_panel.layouts.app')
 @section('page_title')
-    Movies - index
+    Quotes - index
 @endsection
 @section('content')
     <div class="row">
@@ -11,20 +11,21 @@
                         <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Movie director</th>
-                                <th>Movie Title</th>
+                                <th>Movie</th>
+                                <th>Text</th>
+                                <th>icon</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($movies) > 0)
-                                @foreach($movies as $movie)
+                            @if (count($quotes) > 0)
+                                @foreach($quotes as $quote)
                                     <tr>
-                                        <td>{{ $movie->user->first_name ?? "" }} {{ $movie->user->last_name ?? "" }}</td>
-                                        <td>{{ $movie->movie_director ?? "" }}</td>
-                                        <td>{{ $movie->movie_title ?? "" }}</td>
-                                        <td>{{ $movie->created_at ?? "" }}</td>
+                                        <td>{{ $quote->movie->movie_title ?? "" }}</td>
+                                        <td>{{ $quote->text ?? "" }}</td>
+                                        <td>{{ $quote->icon ?? "" }}</td>
+                                        <td>{{ $quote->created_at ?? "" }}</td>
                                         <td>
                                             <span class="tag tag-success">Approved</span>
                                         </td>
