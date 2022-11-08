@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserPanel\HomeController;
+use App\Http\Controllers\UserPanel\MovieController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+Route::get('/{locale}', [HomeController::class, "index"], function ($locale) {
+    App::setLocale($locale);
+});
+
+Route::get('/movie/{movie}', [MovieController::class, "index"])->name('movie.index'); // movie details
+
+Route::get('/top-movie-directors', [MovieController::class, "topMovieDirectors"])->name('top.movie.directors'); // top movie directors
+
+
+Route::middleware('check-admin')->group(function () {
+    Route::namespace('AdminPanel')->name('admin-panel.')->prefix('admin-panel')->group(function () {
+        
+    });
 });
