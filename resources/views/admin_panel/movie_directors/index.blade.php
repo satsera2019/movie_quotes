@@ -1,14 +1,14 @@
 @extends('admin_panel.layouts.app')
 @section('page_title')
-    Movies - index
+    Movie Directors - index
 @endsection
 @section('content')
     <div class="row">
         <div class="col-12">
             
             <div class="row justify-content-end m-2">
-                <a class="btn btn-block btn-primary col-md-2 col-12" href="{{ route("admin-panel.movies.create", ["locale" => app()->getLocale()]) }}">
-                    @lang('admin_panel/movies.add.movie')
+                <a class="btn btn-block btn-primary col-md-2 col-12" href="{{ route("admin-panel.movie-directors.create", ["locale" => app()->getLocale()]) }}">
+                    @lang('admin_panel/directors.add.director')
                 </a>    
             </div>  
             
@@ -18,32 +18,30 @@
                         <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Movie director</th>
-                                <th>Movie Title</th>
+                                <th>name</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($movies) > 0)
-                                @foreach($movies as $movie)
+                            @if (count($movie_directors) > 0)
+                                @foreach($movie_directors as $director)
+                                    {{-- {{ dd($movie) }} --}}
                                     <tr>
-                                        <td>{{ $movie->user->email ?? "" }}</td>
+                                        <td>{{ $director->user->email ?? "" }}</td>
                                         <td>
-                                            {{ json_decode($movie->director->name, true)[app()->getLocale()]["name"] ?? ""  }}
+                                            {{ json_decode($director->name, true)[app()->getLocale()]["name"] ?? ""  }}
                                         </td>
-                                        <td>
-                                            {{ json_decode($movie->movie_details, true)[app()->getLocale()]["movie_title"] ?? ""  }}
-                                        </td>
-                                        <td>{{ $movie->created_at ?? "" }}</td>
+                                        <td>{{ $director->created_at ?? "" }}</td>
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <a href="{{ route("admin-panel.movies.edit", ["locale" => app()->getLocale(), "movie" => $movie]) }}" 
+                                                    <a href="{{ route("admin-panel.movie-directors.edit", ["locale" => app()->getLocale(), "director" => $director]) }}" 
                                                         class="btn btn-info">
                                                         <i class="fa fa-edit"></i>@lang('admin_panel/action.edit')
                                                     </a>
                                                 </div>
+
                                             
                                                 <div class="col">
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
@@ -69,7 +67,7 @@
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">no</button>
-                                                    <form action="{{ route("admin-panel.movies.delete", ["locale" => app()->getLocale(), "movie" => $movie]) }}" method="post">
+                                                    <form action="{{ route("admin-panel.movie-directors.delete", ["locale" => app()->getLocale(), "director" => $director]) }}" method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary">yes</button>
                                                     </form>

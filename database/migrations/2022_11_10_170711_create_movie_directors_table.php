@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quotes', function (Blueprint $table) {
+        Schema::create('movie_directors', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('movie_id');
-            $table->json('text');
-            $table->text('image');
+            $table->integer("user_id");
+            $table->json("name");
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotes');
+        Schema::dropIfExists('movie_directors');
     }
 };

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('title');
-            $table->string('movie_director');
+            $table->integer('movie_director_id');
+            $table->json('movie_details');
             $table->timestamps();
             $table->softDeletes();
         });
