@@ -7,11 +7,9 @@ return [
     */
 
     'movie' => 'Movie',
+    'movies' => 'Movies',
     'add.movie' => 'Add movie',
     'movie.title' => 'Movie title',
     'movie.director' => 'Movie director',
- 
-
-    'save' => 'Save',
-
+    'movie.directors' => 'Movie directors',
 ];

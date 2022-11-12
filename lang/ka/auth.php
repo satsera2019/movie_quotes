@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'email.address' => 'Email Address',
-    'password' => 'Password',
-    'log.in' => 'Log in',
+    'email.address' => 'ელ. ფოსტა',
+    'password' => 'პაროლი',
+    'log.in' => 'შესვლა',
 
     'validate.failed' => 'These credentials do not match our records.',
     'validate.password' => 'The provided password is incorrect.',

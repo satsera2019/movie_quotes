@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class MovieDirector extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     
     protected $fillable = [
@@ -17,17 +19,17 @@ class MovieDirector extends Model
         "name",
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope('deleted_at', function (Builder $builder) {
+            $builder->where('deleted_at', null);
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    public static function getActiveMovieDirector()
-    {
-        return self::whereNull("deleted_at")->get();
-    }
-
-
     
     public static function validateMovieDirector($request)
     {
@@ -44,6 +46,15 @@ class MovieDirector extends Model
         return ["error" => false];
     }
 
+    
+    public static function updateMovieDirector(MovieDirector $director, array $request)
+    {
+        $director->update([
+            "user_id" => auth()->user()->id,
+            "name" => json_encode($request),
+        ]);
+        return true;
+    }
 
     public static function createMovieDirector($request)
     {

@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="form-group col-6">
                         <label for="">@lang('admin_panel/directors.director')</label>
-                        <select class="form-control" name="movie_director_id">
+                        <select class="form-control" name="movie_director_id" required>
                             <option selected disabled value="">@lang('admin_panel/action.select')</option>
                             @foreach ($movie_directors as $director)
                                 <option value="{{ $director->id }}">
@@ -24,14 +24,14 @@
                         <div class="row mb-2">
                             <div class="form-group col-6">
                                 <label for="movie_title_{{$key}}">@lang('admin_panel/movies.movie.title') {{ $key }} </label>
-                                <input type="text" class="form-control" name="{{$key}}[movie_title]" id="movie_title_{{$key}}" placeholder="Enter Movie Title">
+                                <input type="text" class="form-control" name="{{$key}}[movie_title]" id="movie_title_{{$key}}" placeholder="Enter Movie Title" required>
                             </div>
                         </div>
                     @endforeach
                 </div>
                 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">@lang('admin_panel/movies.save')</button>
+                    <button type="submit" class="btn btn-primary">@lang('admin_panel/action.save')</button>
                 </div>
             </form>
         </div>

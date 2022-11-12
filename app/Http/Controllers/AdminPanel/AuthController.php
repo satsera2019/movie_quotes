@@ -25,7 +25,7 @@ class AuthController extends Controller
         }
         $result = Auth::attempt([ 'email' => $request->email, 'password' => $request->password, 'role' => 'admin',]);
         if($result){
-            return redirect()->route('admin-panel.movies.index', ["locale" => app()->getLocale()]);
+            return redirect()->route('admin-panel.movie-directors.index', ["locale" => app()->getLocale()]);
         }
         return back()->with(['success' => false, 'error' => "Password or email is incorrect"]);
     }

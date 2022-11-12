@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class Movie extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         "user_id",
@@ -18,9 +21,26 @@ class Movie extends Model
         "movie_details",
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope('deleted_at', function (Builder $builder) {
+            $builder->where('deleted_at', null);
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function quote(): HasOne
+    {
+        return $this->hasOne(Quote::class);
+    }
+
+    public function quotes(): HasMany
+    {
+        return $this->hasMany(Quote::class);
     }
 
     public function director(): BelongsTo
@@ -61,8 +81,13 @@ class Movie extends Model
         return true;
     }
 
-    public static function getActiveMovies()
+    public static function updateMovie(Movie $movie, array $request)
     {
-        return self::whereNull("deleted_at")->get();
+        $movie->update([
+            "user_id" => auth()->user()->id,
+            "movie_director_id" => $request["movie_director_id"],
+            "movie_details" => json_encode($request),
+        ]);
+        return true;
     }
 }

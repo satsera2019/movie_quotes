@@ -7,12 +7,9 @@ return [
     */
 
     'movie' => 'ფილმი',
+    'movies' => 'ფილმები',
     'add.movie' => 'ფილმის დამატება',
     'movie.title' => 'ფილმის სახელი',
     'movie.director' => 'ფილმის რეჟისორი',
-
-
-    'save' => 'შენახვა',
-    
-
+    'movie.directors' => 'რეჟისორები',
 ];

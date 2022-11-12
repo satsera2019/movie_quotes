@@ -25,27 +25,32 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Movie Quotes</a>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ route("user-panel.index", ["locale" => app()->getLocale()]) }}">{{ env("APP_NAME") }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">@lang('user_panel/main.home') <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{{ route("user-panel.index", ["locale" => app()->getLocale()]) }}">
+                    @lang('user_panel/main.home') <span class="sr-only">(current)</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">@lang('user_panel/main.top.movie.directors')</a>
+                  <a class="nav-link" href="{{ route("top.movie.directors", ["locale" => app()->getLocale()]) }}">
+                    @lang('user_panel/main.top.movie.directors')
+                  </a>
                 </li>
               </ul>
             </div>
             @foreach(Config::get('lang') as $key => $lang)
-              <a href="{{ route("change-lang", ["locale" => $key]) }}" class="btn btn-primary checkable-btn active" data-check-group="1">{{ $key }}</a>
+              <a href="{{ route("change-lang", ["locale" => $key]) }}" 
+                class="@if(app()->getLocale() === $key) disabled @endif btn btn-primary active ml-2" data-check-group="1">{{ $key }}</a>
             @endforeach
         </nav>
         
-        <div class="container">
+        <div class="container" style="margin-top: 65px;">
             @yield('content')
         </div>
     </body>

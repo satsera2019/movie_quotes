@@ -11,33 +11,41 @@ class MovieDirectorController extends Controller
 {
     public function index(): View
     {
-        $movie_directors = MovieDirector::getActiveMovieDirector();
+        $movie_directors = MovieDirector::all();
         $langs = config()->get('lang');
         return view("admin_panel.movie_directors.index", compact("movie_directors", "langs"));
     }
-
     
     public function createMovieDirector(): View
     {
         $langs = config()->get('lang');
         return view("admin_panel.movie_directors.create", compact("langs"));
     }
-    
 
-    // public function editMovieDirector(Request $request)
-    public function editMovieDirector(MovieDirector $request)
+    public function editMovieDirector($lang, MovieDirector $director)
     {
-        dd($request->all(), $request);
         $langs = config()->get('lang');
-        return view("admin_panel.movie_directors.edit", compact("langs", "request"));
+        return view("admin_panel.movie_directors.edit", compact("langs", "director"));
     }
 
-    // public function deleteMovieDirector(Request $request)
-    public function deleteMovieDirector(MovieDirector $director_id)
+    public function deleteMovieDirector($lang, MovieDirector $director)
     {
-        dd($director_id);
+        if($director->delete()){
+            return redirect(route("admin-panel.movie-directors.index", ["locale" => app()->getLocale()]))->with('message', 'Movie director delete successfully.');
+        }
+        return redirect(route("admin-panel.movie-directors.index", ["locale" => app()->getLocale()]))->with('message', 'Error movie director delete.');
     }
-
+    
+    public function updateMovieDirector($lang, MovieDirector $director, Request $request)
+    {
+        $validation  = MovieDirector::validateMovieDirector($request->all());
+        if ($validation["error"]) {return back()->with('error', $validation["message"]);}  
+        $movie_director_updated = MovieDirector::updateMovieDirector($director, $request->all());
+        if ($movie_director_updated) {
+            return redirect(route("admin-panel.movie-directors.index", ["locale" => app()->getLocale()]))->with('message', 'Movie director updated successfully.');
+        }
+        return back()->with('error', 'Something went wrong.');
+    }
     
     public function storeMovieDirector(Request $request)
     {
