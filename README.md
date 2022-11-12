@@ -1,4 +1,6 @@
 <p>ADMIN CREATE COMMAND: php artisan admin:create</p>
+<p>ADMIN PANEL SIDE: /en/admin-panel</p>
+<p>USER PANEL SIDE: /en/user-panel</p>
 
 
 
